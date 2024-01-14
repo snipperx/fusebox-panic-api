@@ -30,5 +30,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'third_party_api' => [
+        'base_url' => env('THIRD_PARTY_API_BASE_URL'),
+        'api_key' => env('THIRD_PARTY_API_KEY'),
+    ]
 
 ];
