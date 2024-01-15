@@ -18,5 +18,5 @@ use Tests\TestCase;
 
 class PanicControllerTest extends TestCase
 {
-    
+
 }
