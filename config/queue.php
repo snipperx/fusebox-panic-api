@@ -71,6 +71,14 @@ return [
             'after_commit' => false,
         ],
 
+        'api' => [
+            'driver' => 'database',
+            'table' => 'api_queue',
+            'queue' => 'api',
+            'expire' => 60,
+            'retry_after' => 30,
+        ],
+
     ],
 
     /*

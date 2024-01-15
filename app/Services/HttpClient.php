@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class HttpClient
 {
-    private Repository $config;
+
     private string $apiBaseUrl;
     private string $apiKey;
 

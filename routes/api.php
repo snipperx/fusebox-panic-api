@@ -16,12 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-
+//Route::post('panics/create', [PanicController::class, 'createPanic']);
+//Route::get('test', [PanicAlertController::class, 'test']);
 
 
 Route::controller(AuthController::class)->group(function (): void {
@@ -33,7 +29,10 @@ Route::controller(AuthController::class)->group(function (): void {
 Route::group(['prefix' => 'panics', 'middleware' => [
         'auth:api', 'cors']], function () {
 
-    Route::post('create', [PanicController::class, 'createPanic']);
-    Route::post('cancel', [PanicController::class, 'cancelCategory']);
-    Route::get('panic-history', [PanicController::class, 'panicHistory']);
+    Route::post('create', [PanicController::class, 'createPanic'])->middleware('api.logger');
+    Route::post('cancel', [PanicController::class, 'cancelPanicAlert'])->middleware('api.logger');
+    Route::get('panic-history', [PanicController::class, 'getUserNotificationHistory']);
 });
+
+
+

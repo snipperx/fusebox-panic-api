@@ -1,0 +1,336 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Fuse Box Panic Alert Documentation",
+        "description": "Fuse Box Panic Alert Swagger OpenApi description",
+        "contact": {
+            "email": "ncubesss@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Fuse Box Panic Alert API Server"
+        }
+    ],
+    "paths": {
+        "auth/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "description": "Login The User",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/panics/create": {
+            "post": {
+                "tags": [
+                    "Panics"
+                ],
+                "summary": "Create  New Panic Alert",
+                "description": "Creates New Alert",
+                "operationId": "createPanic",
+                "parameters": [
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "panic_type",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "details",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "text"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/panics/cancel": {
+            "post": {
+                "tags": [
+                    "Panics"
+                ],
+                "summary": "Cancel Panic",
+                "operationId": "cancelPanic",
+                "parameters": [
+                    {
+                        "name": "panic_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/panics/panic-history": {
+            "get": {
+                "tags": [
+                    "Panics"
+                ],
+                "summary": "Get Panic History",
+                "description": "Get Panic History",
+                "operationId": "showPanics",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "App/Http/Resources/Api/V1/PanicResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "validation failure – missing/incorrect variables"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Panic": {
+                "title": "Panic model",
+                "description": "Panic model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "category id",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "longitude": {
+                        "title": "longitude",
+                        "description": "longitude",
+                        "type": "string",
+                        "example": "28.0559616"
+                    },
+                    "latitude": {
+                        "title": "latitude",
+                        "description": "latitude",
+                        "type": "string",
+                        "example": "-26.099712"
+                    },
+                    "panic_type": {
+                        "title": "latitude",
+                        "description": "latitude",
+                        "type": "string",
+                        "example": "robbery"
+                    },
+                    "details": {
+                        "title": "details",
+                        "description": "details",
+                        "type": "string",
+                        "example": "robbery under way down town"
+                    },
+                    "reference_id": {
+                        "title": "reference_id",
+                        "description": "reference_id",
+                        "type": "integer",
+                        "example": "6"
+                    },
+                    "panic_id": {
+                        "title": "panic_id",
+                        "description": "panic_id",
+                        "type": "integer",
+                        "example": "674"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "Panic created date",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2023-03-28 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "Panic updated date",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2023-03-28 17:50:45"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User model",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email",
+                        "type": "string"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "Created At datetime",
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "Updated At datetime",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://localhost/oauth/authorize",
+                        "tokenUrl": "http://localhost/oauth/token",
+                        "refreshUrl": "http://localhost/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "FuseBoxPanic",
+            "description": "API Endpoints of FuseBoxPanic"
+        }
+    ]
+}

@@ -1,66 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Api  Tests - Step by Step
+Pratical step-by-step how to build auth tests in a RESTful API made in Laravel 5.5
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Prerequisites
+* Apache
+* PHP
+* Composer
+* [Laravel new app created](https://github.com/cantellir/laravel-new-app)
+* [Laravel api auth with passport done](https://github.com/cantellir/laravel-api-auth)
 
-## About Laravel
+### Initial notes
+The project in this repo contains all the steps finalized
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Configure database
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+In terminal run
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+composer update
+```
+```
+php artisan make:refesh seeder
+```
+```
+php artisan passport:install
+```
 
-## Learning Laravel
+```
+php artisan serve
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Configure email settings in the env
+In the root dir of the project adjust phpunit.xml adding DB_CONNECTION
+```
+   In the env 
+   
+THIRD_PARTY_API_BASE_URL=https://wayne.fusebox-staging.co.za/api/v1
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+THIRD_PARTY_API_KEY=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDY3YWExNzg2OGQxZmY3NDEyYmY3YTc5YTViOGI1ODhkZTc3ZmUzMjRmM2ZjNGMwZjdlZjQ1YWZjOGRmYTc0ODJmYzZkOGQzOWU0ODAzMGEiLCJpYXQiOjE3MDQ5Njc3MDAsIm5iZiI6MTcwNDk2NzcwMCwiZXhwIjoxNzM2NTkwMTAwLCJzdWIiOiIxNCIsInNjb3BlcyI6W119.I1xbZxCoXTiqszo-Z6mYKTapqydDzTbq169INk46AWpMn_rfIzH3cnYFOhD96ZP8nBnCNVo9P3f3svVjDh953PCcphwE9tytiNQJTMGD_Gf7sVejHZ-xsHPJsnNU24dDhiRn7lZEto_xToi1flic4Syi9lcnD14eIDQ8zWn_xXB-JS2nf_KG7FjOUEQI9mUYDPNxj9gy6E0W6Sb3drlQltwy6idTJWQ-6V-1IEMWjRuV6NnejrEGcBzz6Iip2-8LYVNhadZ9Dgyn4Js2Si0SBCmMA-gWNGPRQTK7G9XmrHbVYV6aU_qG9RKcAyVdsk7vpyxHLcAs4sajpAr-zw3vcGELyH8YIZJ0I-9CBO4kvAirHBIhnodbW09tEjbsLp_iE2kle7uoZlLBCxjnVwXhTCwLJ0Zh9LXSFtD80a47wXD8Q1ofnTcAzIXr31llOTU3LMkmODfFeEpAfN-aY3m9ZoGPWstovLSCor9vWdsDfQs5YkIhOI7MCoL8HxHF1o2ENZrGM1dpKNU8SJlX4yWUT-QA50PU4VjntCogFwnfzdmVb5n8X9Y-KJ2x_Y6Z4yRL7egduovpQ9pf2ZYPHook9zUZ2Prk9n1599ZkpfkzI7EsGndoTvXZfJXpGgFXztv7VNo2P0W45pl-6Q5QeBqAtbSKBHZ2J8nftMNKPEEZ12I
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+configure you enviroment variable in this order
+```
 
-## Laravel Sponsors
+### Serve your application
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
+http://127.0.0.1:8000/api/documentation#/
+```
 
-### Premium Partners
+```
+User email is  - Commissioner Gordon
+Password - 12345
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## References
+* [Laravel docs](https://laravel.com/docs/5.5) - Laravel Documentation
+* [Laravel Passport Post](https://laravelcode.com/post/laravel-passport-create-rest-api-with-authentication) - Create REST API with authentication
+* [Laravel API Tutorial](https://www.toptal.com/laravel/restful-laravel-api-tutorial) - How to Build and Test a RESTful API
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
