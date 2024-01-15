@@ -78,7 +78,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         try {
-//            $this->userValidator->validateLogin($request);
+
             $validated = $request->validated();
 
             if (!Auth::attempt($request->only(['email', 'password']))) {

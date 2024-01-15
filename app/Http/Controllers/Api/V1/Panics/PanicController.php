@@ -34,7 +34,6 @@ class PanicController extends Controller
     }
 
 
-
     /**
      * @OA\Post(
      *      path="/panics/create",
@@ -174,7 +173,6 @@ class PanicController extends Controller
             $panic = Panic::getPanicId();
             $cancelPanicJob = new CancelPanicJob(array('panic_id' => $panic->panic_id));
             $this->dispatchSync($cancelPanicJob);
-            $responseArray = $cancelPanicJob->getResponse();
             //log user who cancelled
             Log::info('User with ID' . $panic->panic_id . 'canceled the panic"',
                 $cancelPanicJob->getResponse());

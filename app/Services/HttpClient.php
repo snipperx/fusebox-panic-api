@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Config\Repository;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Http;
 
@@ -29,8 +30,9 @@ class HttpClient
 
             return json_decode($response, true);
         } catch (\Throwable $e) {
-            // Handle any exceptions that may occur during the API request
-            // For example, you could log the error and return an error response
+
+            Log::info($e->getMessage());
+
             return [
                 'error' => true,
                 'Message' => $e->getMessage(),

@@ -24,10 +24,9 @@ class ApiResponseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Register the ApiResponseMiddleware
+
         $this->app['router']->aliasMiddleware('api.response', \App\Http\Middleware\ApiResponseMiddleware::class);
 
-        // Register the api macro
         Response::macro('api', function ($status, $message = '', $data = null, $code = 200) {
             return response()->json([
                 'status' => $status,
