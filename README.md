@@ -48,7 +48,7 @@ http://127.0.0.1:8000/api/documentation#/
 ```
 
 ```
-User email is  - Commissioner Gordon
+User email is  - test@user.com
 Password - 12345
 ```
 
