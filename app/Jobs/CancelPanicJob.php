@@ -36,7 +36,7 @@ class CancelPanicJob implements ShouldQueue
     public function handle(HttpClient $thirdPartyApiService)
     {
         $response =  $thirdPartyApiService->makeApiRequest('post', '/panic/cancel', $this->requestData);
-        cache()->put('cancel_panic_result', $response);
+        cache()->put('cancel_panic_result', $response); // cache the response to display to user
         return response()->json(['message' => 'Job completed successfully', 'result' => $response]);
     }
 

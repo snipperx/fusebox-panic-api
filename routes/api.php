@@ -18,13 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/clear-cache', function () {
-    Artisan::call('cache:clear');
-});
-
-Route::get('/route-cache', function () {
-    Artisan::call('route:cache');
-});
+//Route::get('/clear-cache', function () {
+//    Artisan::call('cache:clear');
+//});
+//
+//Route::get('/route-cache', function () {
+//    Artisan::call('route:cache');
+//});
+//
+//Route::get('/run-worker', function () {
+//    Artisan::call('queue:work');
+//});
 
 Route::controller(AuthController::class)->group(function (): void {
     Route::post('/auth/login', 'login');
