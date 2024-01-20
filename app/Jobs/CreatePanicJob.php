@@ -11,10 +11,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class CreatePanicJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
     private mixed $requestData;
@@ -27,11 +28,15 @@ class CreatePanicJob implements ShouldQueue
 
     public function handle(HttpClient $thirdPartyApiService)
     {
-        $this->response = $thirdPartyApiService->makeApiRequest('post', '/panic/create', $this->requestData);
+        $response = $thirdPartyApiService->makeApiRequest('post', '/panic/create', $this->requestData);
+        cache()->put('create_panic_result', $response);
+        return response()->json(['message' => 'Job completed successfully', 'result' => $response]);
     }
 
-    public function getResponse()
+
+
+    public function failed($exception)
     {
-        return $this->response;
+        Log::error('MyJob failed: '. $exception->getMessage());
     }
 }

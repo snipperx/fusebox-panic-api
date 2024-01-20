@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Panics\PanicController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::post('panics/create', [PanicController::class, 'createPanic']);
-//Route::get('test', [PanicAlertController::class, 'test']);
 
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+});
+
+Route::get('/route-cache', function () {
+    Artisan::call('route:cache');
+});
 
 Route::controller(AuthController::class)->group(function (): void {
     Route::post('/auth/login', 'login');
@@ -27,7 +33,7 @@ Route::controller(AuthController::class)->group(function (): void {
 
 
 Route::group(['prefix' => 'panics', 'middleware' => [
-        'auth:api', 'cors']], function () {
+    'auth:api', 'cors']], function () {
 
     Route::post('create', [PanicController::class, 'createPanic'])->middleware('api.logger');
     Route::post('cancel', [PanicController::class, 'cancelPanicAlert'])->middleware('api.logger');

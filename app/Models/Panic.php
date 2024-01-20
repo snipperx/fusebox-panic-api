@@ -20,6 +20,8 @@ class Panic extends Model
 
     protected $table = 'panic_alerts';
 
+
+
     /**
      * @OA\Property(
      *     format="int64",
@@ -99,6 +101,17 @@ class Panic extends Model
 
     /**
      * @OA\Property(
+     *     description="user id",
+     *     title="user_id",
+     *     example="1"
+     * )
+     *
+     * @var integer
+     */
+    private $user_id;
+
+    /**
+     * @OA\Property(
      *     example="2023-03-28 17:50:45",
      *     format="datetime",
      *     description="Panic created date",
@@ -119,6 +132,17 @@ class Panic extends Model
      *
      * @var string
      */
+
+    protected $fillable = [
+        'id',
+        'longitude',
+        'latitude',
+        'panic_type',
+        'details',
+        'reference_id',
+        'panic_id',
+        'user_id',
+    ];
     private $updated_at;
 
 

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\ApiRequestCompleted;
 use App\Events\PanicDetailsSaved;
+use App\Listeners\ProcessApiRequestResponse;
 use App\Listeners\SavePanicDetailsListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,6 +22,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
 
     ];
 

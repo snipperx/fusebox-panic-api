@@ -9,10 +9,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class CancelPanicJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private mixed $requestData;
     private $response;
@@ -30,15 +31,17 @@ class CancelPanicJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function handle(HttpClient $thirdPartyApiService)
     {
-        $this->response =  $thirdPartyApiService->makeApiRequest('post', '/panic/cancel', $this->requestData);
+        $response =  $thirdPartyApiService->makeApiRequest('post', '/panic/cancel', $this->requestData);
+        cache()->put('cancel_panic_result', $response);
+        return response()->json(['message' => 'Job completed successfully', 'result' => $response]);
     }
 
-    public function getResponse()
+    public function failed($exception)
     {
-       return $this->response;
+        Log::error('MyJob failed: '. $exception->getMessage());
     }
 }

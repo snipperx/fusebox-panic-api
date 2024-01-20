@@ -10,14 +10,18 @@ use App\Http\Responses\ApiResponse;
 use App\Http\Validators\CreatePanicValidator;
 use App\Jobs\CancelPanicJob;
 use App\Jobs\CreatePanicJob;
+use App\Jobs\getREsponse;
 use App\Models\Panic;
 use App\Services\PanicAlertService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Validator;
 use OpenApi\Annotations as OA;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class PanicController extends Controller
 {
@@ -103,6 +107,7 @@ class PanicController extends Controller
      */
     public function createPanic(Request $request): JsonResponse
     {
+
         try {
 
             $validator = $this->panicValidator->validatePanicAlert($request->all());
@@ -115,13 +120,25 @@ class PanicController extends Controller
 
             $this->dispatchSync($createPanicJob);
 
-            $responseArray = $createPanicJob->getResponse();
+            $result = cache()->get('create_panic_result');
 
-            $this->alertService->persistPanicData($request->all(), $responseArray['data']['panic_id']);
+            if ($result) {
+                $this->alertService->persistPanicData($request->all(), $result['data']['panic_id']);
+                return ApiResponse::make(
+                    'success',
+                    'Action completed successfully',
+                    $result,
+                    200);
+            } else {
+                return response()->json(['message' => 'Job failed or was not completed', 'result' => null]);
+            }
 
-            return response()->json($createPanicJob->getResponse());
         } catch (\Throwable $th) {
-            return ApiResponse::make('error', $th->getMessage(), '', 500);
+            return ApiResponse::make(
+                'error',
+                $th->getMessage(),
+                '',
+                500);
         }
     }
 
@@ -173,11 +190,21 @@ class PanicController extends Controller
             $panic = Panic::getPanicId();
             $cancelPanicJob = new CancelPanicJob(array('panic_id' => $panic->panic_id));
             $this->dispatchSync($cancelPanicJob);
-            //log user who cancelled
-            Log::info('User with ID' . $panic->panic_id . 'canceled the panic"',
-                $cancelPanicJob->getResponse());
 
-            return response()->json($cancelPanicJob->getResponse());
+            $result = cache()->get('cancel_panic_result');
+
+            if ($result) {
+                Log::info('User with ID' . $panic->panic_id . 'canceled the panic"',
+                    $result);
+                return ApiResponse::make(
+                    'success',
+                    'Action completed successfully',
+                    $result,
+                    200);
+            } else {
+                return response()->json(['message' => 'Job failed or was not completed', 'result' => null]);
+            }
+
         } catch (\Throwable $th) {
             return ApiResponse::make('error', $th->getMessage(), '', 500);
         }
