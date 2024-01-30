@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 //    Artisan::call('queue:work');
 //});
 
-Route::get('panic/panic-history', [PanicController::class, 'getUserNotificationHistory']);
+
 
 Route::controller(AuthController::class)->group(function (): void {
     Route::post('login', 'login');
@@ -42,6 +42,7 @@ Route::group(['prefix' => 'panics', 'middleware' => [
     'auth:api', 'cors' , 'json.response']], function () {
     Route::post('create', [PanicController::class, 'createPanic'])->middleware('api.logger');
     Route::post('cancel', [PanicController::class, 'cancelPanicAlert'])->middleware('api.logger');
+    Route::get('panic-history', [PanicController::class, 'getUserNotificationHistory'])->middleware('api.logger');
 });
 
 
