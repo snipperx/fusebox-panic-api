@@ -30,18 +30,18 @@ use Illuminate\Support\Facades\Route;
 //    Artisan::call('queue:work');
 //});
 
+Route::get('panic/panic-history', [PanicController::class, 'getUserNotificationHistory']);
+
 Route::controller(AuthController::class)->group(function (): void {
-    Route::post('/auth/login', 'login');
-    Route::post('/auth/logout', 'logout')->name('logout')->middleware('auth:api');
+    Route::post('login', 'login');
+    Route::post('logout', 'logout')->name('logout')->middleware('auth:api');
 });
 
 
 Route::group(['prefix' => 'panics', 'middleware' => [
-    'auth:api', 'cors']], function () {
-
+    'auth:api', 'cors' , 'json.response']], function () {
     Route::post('create', [PanicController::class, 'createPanic'])->middleware('api.logger');
     Route::post('cancel', [PanicController::class, 'cancelPanicAlert'])->middleware('api.logger');
-    Route::get('panic-history', [PanicController::class, 'getUserNotificationHistory']);
 });
 
 

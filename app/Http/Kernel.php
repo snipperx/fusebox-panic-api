@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'log.http' => \App\Http\Middleware\LogHttpRequests::class,
         'cors'          => \App\Http\Middleware\Cors::class, // added
         'api.logger'  =>   \App\Http\Middleware\LogHttpRequests::class,
+        'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
     ];
 }
